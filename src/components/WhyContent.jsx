@@ -43,12 +43,6 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
     transform: "scale(1.02)",
     boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.3)",
   },
-  [theme.breakpoints.down("md")]: {
-    flexDirection: "column", // Stack image and text vertically on small screens
-  },
-  [theme.breakpoints.up("md")]: {
-    flexDirection: "row", // Align i
-  },
 }));
 
 const WhyContent = () => {
@@ -64,6 +58,9 @@ const WhyContent = () => {
           justifyContent: "center",
           gap: 4, // Spacing between cards
           padding: "40px 20px",
+          "@media (max-width: 599px)": {
+            flexDirection: "column",
+          },
         }}
       >
         {cardData.map((item) => (
