@@ -7,7 +7,7 @@ const Hero = () => {
     <Box
       sx={{
         height: "100vh",
-        backgroundImage: `url('/path-to-your-image.jpg')`,
+        backgroundImage: `url('https://files.grupogarruz.com.mx/images/hero2.jpg')`,
         backgroundSize: "cover",
         display: "flex",
         alignItems: "center",

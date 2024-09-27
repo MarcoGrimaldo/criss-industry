@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, Tabs, Tab } from "@mui/material";
 import { styled } from "@mui/system";
 import { useParams } from "react-router-dom";
@@ -47,7 +47,25 @@ const productData = {
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const [tabValue, setTabValue] = React.useState(0);
+  const [tabValue, setTabValue] = useState(0);
+  const [product, setProduct] = useState([]); // State to store products
+
+  // Get the current pathname from the window location
+  const path = window.location.pathname;
+
+  // Split the path into parts
+  const parts = path.split("/");
+  // Get the last part which should be the product key if the URL follows the same pattern
+  const productKey = parts[parts.length - 1];
+  // Construct the URL with the product key
+  const url = `${import.meta.env.VITE_API_URL}/api/products/${productKey}`;
+
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => setProduct(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []); // Empty dependency array means this effect runs only once after the initial render
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -56,14 +74,14 @@ const ProductDetail = () => {
   return (
     <DetailContainer>
       <LeftSection>
-        <img src={productData.image} alt={productData.title} />
+        <img src={product.image} alt={product.title} />
       </LeftSection>
       <RightSection>
         <Typography variant="h4" gutterBottom>
-          {productData.title}
+          {product.title}
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: "20px" }}>
-          {productData.description}
+          {product.description}
         </Typography>
         <StyledTabs
           value={tabValue}

@@ -7,17 +7,17 @@ const Header = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          TexTech Industries
+          Criss Industries
         </Typography>
         {/* Replace Buttons with Link components styled as buttons */}
         <Button color="inherit" component={RouterLink} to="/">
-          Home
+          Inicio
         </Button>
         <Button color="inherit" component={RouterLink} to="/products">
-          Products
+          Productos
         </Button>
         <Button color="inherit" component={RouterLink} to="/contact-us">
-          Contact
+          Contacto
         </Button>
       </Toolbar>
     </AppBar>

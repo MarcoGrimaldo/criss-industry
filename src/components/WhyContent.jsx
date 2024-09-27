@@ -15,19 +15,19 @@ const cardData = [
     id: 1,
     title: "Card 1",
     description: "This is the first card.",
-    image: "https://via.placeholder.com/150",
+    image: "https://files.grupogarruz.com.mx/images/iso.svg",
   },
   {
     id: 2,
     title: "Card 2",
     description: "This is the second card.",
-    image: "https://via.placeholder.com/150",
+    image: "https://files.grupogarruz.com.mx/images/high-perf.svg",
   },
   {
     id: 3,
     title: "Card 3",
     description: "This is the third card.",
-    image: "https://via.placeholder.com/150",
+    image: "https://files.grupogarruz.com.mx/images/solutions.svg",
   },
 ];
 
@@ -60,7 +60,6 @@ const WhyContent = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
           gap: 4, // Spacing between cards
@@ -74,7 +73,7 @@ const WhyContent = () => {
               component="img"
               image={item.image}
               alt={item.title}
-              sx={{ width: 150, height: 150, borderRadius: "8px" }}
+              sx={{ width: 150, borderRadius: "8px" }}
             />
 
             {/* Text on the right */}

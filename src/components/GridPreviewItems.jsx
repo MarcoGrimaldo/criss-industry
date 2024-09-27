@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -11,34 +11,6 @@ import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import CenteredButton from "./CenteredButton";
 
-// Sample data for the items
-const flexData = [
-  {
-    id: 1,
-    title: "Item 1",
-    image: "https://via.placeholder.com/300",
-    description: "Description for item 1",
-  },
-  {
-    id: 2,
-    title: "Item 2",
-    image: "https://via.placeholder.com/300",
-    description: "Description for item 2",
-  },
-  {
-    id: 3,
-    title: "Item 3",
-    image: "https://via.placeholder.com/300",
-    description: "Description for item 3",
-  },
-  {
-    id: 4,
-    title: "Item 4",
-    image: "https://via.placeholder.com/300",
-    description: "Description for item 4",
-  },
-];
-
 // Styled Card with hover animation
 const AnimatedCard = styled(Card)(({ theme }) => ({
   transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
@@ -49,11 +21,19 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
 }));
 
 const GridPreviewItems = () => {
+  const [products, setProducts] = useState([]); // State to store products
   const navigate = useNavigate();
 
   const handleButtonClick = (id) => {
     navigate(`/product/${id}`);
   };
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/products?limit=4`)
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []); // Empty dependency array means this effect runs only once after the initial render
 
   return (
     <>
@@ -69,7 +49,7 @@ const GridPreviewItems = () => {
           padding: "20px",
         }}
       >
-        {flexData.map((item) => (
+        {products.map((item) => (
           <Box
             key={item.id}
             sx={{
@@ -94,7 +74,7 @@ const GridPreviewItems = () => {
                   onClick={() => handleButtonClick(item.id)}
                   sx={{ marginTop: 2 }}
                 >
-                  See More
+                  Ver más
                 </Button>
               </CardContent>
             </AnimatedCard>

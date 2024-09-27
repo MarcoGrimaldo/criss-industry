@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Card,
@@ -10,42 +10,25 @@ import {
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/system";
 
-// Sample data array
-const products = [
-  {
-    id: 1,
-    title: "Rocco Classic 6 x 400g",
-    description:
-      "Complete wet dog food made with lots of high quality meat and offal.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 2,
-    title: "Rocco Beef 3 x 800g",
-    description:
-      "High-quality beef with vitamin-rich carrots and mineral clay.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 3,
-    title: "Rocco Chicken 5 x 600g",
-    description: "Delicious chicken with tasty calcium bones.",
-    image: "https://via.placeholder.com/150",
-  },
-  // Add more products as needed
-];
-
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: "345px",
   transition: "0.3s",
   "&:hover": {
     transform: "scale(1.05)",
   },
-  margin: "20px", // Ensure some spacing around cards
+  margin: "20px",
 }));
 
 const ProductsGrid = () => {
+  const [products, setProducts] = useState([]); // State to store products
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`)
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []); // Empty dependency array means this effect runs only once after the initial render
 
   return (
     <Box
@@ -77,7 +60,7 @@ const ProductsGrid = () => {
               sx={{ marginTop: 2 }}
               onClick={() => navigate(`/product/${product.id}`)}
             >
-              See More
+              Ver más
             </Button>
           </CardContent>
         </StyledCard>
