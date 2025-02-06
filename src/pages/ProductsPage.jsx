@@ -8,9 +8,6 @@ const ProductsPage = () => {
   return (
     <div>
       <Header />
-      <Typography variant="h3" align="center" sx={{ marginTop: "30px" }}>
-        Innovative Materials for the Future
-      </Typography>
       <ProductsGrid />
       <Footer />
     </div>

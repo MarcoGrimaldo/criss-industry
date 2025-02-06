@@ -37,35 +37,37 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const MiscCardSection = () => {
   return (
     <CustomCard>
-      {/* Image on the left */}
-      <CardMedia
-        component="img"
-        image="https://via.placeholder.com/400x250" // Replace with your image
-        alt="Material Innovation"
-        sx={{
-          width: { xs: "100%", sm: "400px" }, // Full width on small screens, fixed on larger
-          height: "auto",
-          borderRadius: "8px",
-        }}
-      />
-
       {/* Text on the right */}
       <CardContent sx={{ paddingLeft: { sm: 4 }, textAlign: "left" }}>
         <Typography variant="h4" component="div" sx={{ fontWeight: "bold" }}>
-          Material Innovation
+          Misión
         </Typography>
         <Typography
           variant="body1"
           sx={{ marginTop: 2, lineHeight: "1.5", color: "#666" }}
         >
-          We utilize our analytically driven approach combined with our cutting
-          edge advanced development center to create the ideal solution for your
-          specific requirements.
+          Fabricar y comercializar productos de alto valor con pasión y
+          compromiso, ofreciendo orientación y asesoramiento personalizados para
+          satisfacer las necesidades de nuestros clientes. Nos esforzamos por
+          apoyar su crecimiento y competitividad en sus respectivos mercados,
+          garantizando calidad y excelencia en cada interacción.
+          <br />
+          <br />
         </Typography>
-        {/* Styled link as a button */}
-        <StyledButton variant="text">
-          Our Innovative Solutions &gt;
-        </StyledButton>
+        <Typography variant="h4" component="div" sx={{ fontWeight: "bold" }}>
+          Visión
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ marginTop: 2, lineHeight: "1.5", color: "#666" }}
+        >
+          Consolidarnos como líderes en el sector manufacturero, siendo
+          reconocidos por nuestra innovación, calidad y capacidad de adaptación.
+          Aspiramos a construir una sólida cartera de clientes en todos los
+          sectores industriales, cumpliendo con los más altos estándares de
+          calidad nacionales e internacionales y promoviendo relaciones
+          sostenibles a largo plazo.
+        </Typography>
       </CardContent>
     </CustomCard>
   );

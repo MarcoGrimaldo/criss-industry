@@ -15,15 +15,10 @@ const ContactContainer = styled(Box)(({ theme }) => ({
 
 // Custom styled submit button
 const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: "#e85d17",
-  color: "#fff",
   padding: "12px 24px",
   fontWeight: "bold",
   textTransform: "none",
   marginTop: "16px",
-  "&:hover": {
-    backgroundColor: "#b74d0f",
-  },
 }));
 
 // Custom styled WhatsApp button
@@ -42,15 +37,15 @@ const ContactUsSection = () => {
   return (
     <Box sx={{ backgroundColor: "#f4f4f4", padding: "60px 20px" }}>
       <Typography variant="h3" align="center" gutterBottom>
-        Contact Us
+        Contacto
       </Typography>
       <Typography
         variant="body1"
         align="center"
         sx={{ marginBottom: "40px", color: "#666" }}
       >
-        We'd love to hear from you! Please fill out the form below or reach us
-        via WhatsApp.
+        ¡Nos encantaría saber de usted! Por favor complete el siguiente
+        formulario o comuníquese con nosotros A través de WhatsApp.
       </Typography>
 
       <ContactContainer>
@@ -65,13 +60,13 @@ const ContactUsSection = () => {
           {/* Contact Form */}
           <Box sx={{ flex: 1, width: "100%" }}>
             <Typography variant="h5" gutterBottom>
-              Send us a message
+              Envíanos un mensaje
             </Typography>
 
             <form noValidate autoComplete="off">
               <TextField
                 fullWidth
-                label="Name"
+                label="Nombre"
                 variant="outlined"
                 margin="normal"
               />
@@ -83,7 +78,7 @@ const ContactUsSection = () => {
               />
               <TextField
                 fullWidth
-                label="Message"
+                label="Mensaje"
                 variant="outlined"
                 multiline
                 rows={4}
@@ -91,7 +86,7 @@ const ContactUsSection = () => {
               />
 
               <StyledButton variant="contained" fullWidth>
-                Submit
+                Envíar
               </StyledButton>
             </form>
           </Box>
@@ -109,7 +104,7 @@ const ContactUsSection = () => {
               startIcon={<WhatsAppIcon />}
               onClick={() => window.open("https://wa.me/1234567890", "_blank")} // Replace with your WhatsApp number
             >
-              Contact Us on WhatsApp
+              Contáctenos en WhatsApp
             </WhatsAppButton>
           </Box>
         </Box>
