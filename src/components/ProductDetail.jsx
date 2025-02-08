@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, Tabs, Tab } from "@mui/material";
+import { Box, Typography, Button, CircularProgress } from "@mui/material";
+import GridPreviewItems from "./GridPreviewItems";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { styled } from "@mui/system";
-import { useParams } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // Styled container for the detail view
 const DetailContainer = styled(Box)(({ theme }) => ({
@@ -12,106 +17,120 @@ const DetailContainer = styled(Box)(({ theme }) => ({
   maxWidth: "1200px",
   margin: "40px auto",
   padding: "20px",
+  flexWrap: "wrap",
 }));
 
 const LeftSection = styled(Box)(({ theme }) => ({
-  flexBasis: "40%",
-  paddingRight: "20px",
-  img: {
-    width: "100%", // Ensure the image is fully responsive
-    borderRadius: "8px",
+  flexBasis: "100%",
+  padding: "0 70px 0 20px",
+  maxWidth: "200px",
+  [".slick-arrow:before"]: {
+    color: "gray",
   },
 }));
 
 const RightSection = styled(Box)(({ theme }) => ({
-  flexBasis: "60%",
+  flexBasis: "50%",
 }));
-
-const StyledTabs = styled(Tabs)(({ theme }) => ({
-  marginTop: "20px",
+// Custom styled WhatsApp button
+const WhatsAppButton = styled(Button)(({ theme }) => ({
+  backgroundColor: "#25D366", // WhatsApp green color
+  color: "#fff",
+  padding: "12px 24px",
+  fontWeight: "bold",
+  textTransform: "none",
+  "&:hover": {
+    backgroundColor: "#1ebe5b",
+  },
 }));
-
-const StyledTab = styled(Tab)({});
-
-// Sample product data
-const productData = {
-  id: 1,
-  title: "Rocco Classic 6 x 400g",
-  description:
-    "Complete wet dog food made with lots of high quality meat and offal. With 100% fresh and grain-free ingredients! Your dog will love this species-appropriate meaty meal.",
-  image: "https://via.placeholder.com/400x300", // Replace with actual image path
-  ingredients: "Pure beef, water, and essential vitamins and minerals.",
-  feedingGuide:
-    "Feed adult dogs 1.5 to 2.5 cans per 20 lbs of body weight per day.",
-};
 
 const ProductDetail = () => {
-  const { id } = useParams();
-  const [tabValue, setTabValue] = useState(0);
-  const [product, setProduct] = useState([]); // State to store products
+  const [product, setProduct] = useState(null); // Default to null to check loading state
+  const [loading, setLoading] = useState(true); // State to track loading
 
-  // Get the current pathname from the window location
   const path = window.location.pathname;
-
-  // Split the path into parts
   const parts = path.split("/");
-  // Get the last part which should be the product key if the URL follows the same pattern
   const productKey = parts[parts.length - 1];
-  // Construct the URL with the product key
   const url = `${import.meta.env.VITE_API_URL}/api/products/${productKey}`;
 
   useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => setProduct(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []); // Empty dependency array means this effect runs only once after the initial render
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Failed to fetch product data");
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Stop loading after fetch (success or failure)
+      }
+    };
 
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
+    fetchProduct();
+  }, [url]);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress /> {/* Show a loading spinner while fetching data */}
+      </Box>
+    );
+  }
+
+  if (!product) {
+    return (
+      <Box sx={{ textAlign: "center", marginTop: "50px" }}>
+        <Typography variant="h5" color="error">
+          Product not found.
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
-    <DetailContainer>
-      <LeftSection>
-        <img src={product.image} alt={product.title} />
-      </LeftSection>
-      <RightSection>
-        <Typography variant="h4" gutterBottom>
-          {product.title}
-        </Typography>
-        <Typography variant="body1" sx={{ marginBottom: "20px" }}>
-          {product.description}
-        </Typography>
-        <StyledTabs
-          value={tabValue}
-          onChange={handleTabChange}
-          aria-label="product details tabs"
-        >
-          <StyledTab label="Ingredients" />
-          <StyledTab label="Feeding Guide" />
-        </StyledTabs>
-        {tabValue === 0 && (
-          <Typography sx={{ marginTop: "20px" }}>
-            {productData.ingredients}
+    <>
+      <DetailContainer>
+        <LeftSection>
+          {/* Image Carousel */}
+          <Slider dots infinite speed={500} slidesToShow={1} slidesToScroll={1}>
+            {product.images.map((image, index) => (
+              <Box key={index} sx={{ textAlign: "center" }}>
+                <img
+                  src={image}
+                  alt={`Product image ${index + 1}`}
+                  style={{ width: "100%", borderRadius: "8px" }}
+                />
+              </Box>
+            ))}
+          </Slider>
+        </LeftSection>
+        <RightSection>
+          <Typography variant="h4" gutterBottom>
+            {product.title}
           </Typography>
-        )}
-        {tabValue === 1 && (
-          <Typography sx={{ marginTop: "20px" }}>
-            {productData.feedingGuide}
+          <Typography variant="body1" sx={{ marginBottom: "20px" }}>
+            {product.description}
           </Typography>
-        )}
-        <Typography variant="body2" sx={{ marginTop: "20px", color: "#666" }}>
-          <strong>Customer reviews:</strong> Great Wet Food: "Our two Henry
-          (French Bulldog) and Lily (Boxer) really love Rocco we have all the
-          different flavours so they get a fantastic variety. It's a great
-          alternative to raw feeding which..."
-        </Typography>
-        <Button variant="contained" color="primary" sx={{ marginTop: "20px" }}>
-          Upload your product photo
-        </Button>
-      </RightSection>
-    </DetailContainer>
+          <WhatsAppButton
+            variant="contained"
+            startIcon={<WhatsAppIcon />}
+            endIcon={<ArrowForwardIcon />}
+            onClick={() => window.open("https://wa.me/1234567890", "_blank")} // Replace with your WhatsApp number
+          >
+            Cotizar
+          </WhatsAppButton>
+        </RightSection>
+      </DetailContainer>
+      <GridPreviewItems />
+    </>
   );
 };
 

@@ -1,32 +1,28 @@
 import React from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  CardMedia,
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, CardMedia } from "@mui/material";
 import { styled } from "@mui/system";
 
 // Sample data for the cards
 const cardData = [
   {
     id: 1,
-    title: "Card 1",
-    description: "This is the first card.",
+    title: "Calidad en el servicio",
+    description:
+      "Nos comprometemos con la excelencia en cada interacción. Nuestro equipo garantiza atención personalizada, soluciones adaptadas a tus necesidades y un servicio que supera expectativas.",
     image: "https://files.grupogarruz.com.mx/images/iso.svg",
   },
   {
     id: 2,
-    title: "Card 2",
-    description: "This is the second card.",
+    title: "Eficiencia en mediciones",
+    description:
+      "Optimizamos cada proceso con herramientas precisas y metodologías innovadoras. Nuestro enfoque basado en datos te brinda resultados exactos y confiables para una mejor toma de decisiones.",
     image: "https://files.grupogarruz.com.mx/images/high-perf.svg",
   },
   {
     id: 3,
-    title: "Card 3",
-    description: "This is the third card.",
+    title: "Soluciones creativas",
+    description:
+      " Pensamos fuera de lo convencional para ofrecerte estrategias innovadoras. Nos especializamos en transformar desafíos en oportunidades con ideas frescas y efectivas.",
     image: "https://files.grupogarruz.com.mx/images/solutions.svg",
   },
 ];
@@ -47,7 +43,7 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
 
 const WhyContent = () => {
   return (
-    <>
+    <Box sx={{ paddingTop: "3em" }}>
       <Typography variant="h4" align="center">
         ¿Porque escogernos?
       </Typography>
@@ -73,6 +69,9 @@ const WhyContent = () => {
 
             {/* Text on the right */}
             <CardContent sx={{ paddingLeft: 2 }}>
+              <Typography variant="h6" color="text.secondary">
+                {item.title}
+              </Typography>
               <Typography variant="body1" color="text.secondary">
                 {item.description}
               </Typography>
@@ -80,7 +79,7 @@ const WhyContent = () => {
           </AnimatedCard>
         ))}
       </Box>
-    </>
+    </Box>
   );
 };
 

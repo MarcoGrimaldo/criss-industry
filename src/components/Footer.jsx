@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <Box sx={{ backgroundColor: "#333", color: "white", padding: "20px" }}>
       <Typography variant="body1" align="center">
-        © 2024 TexTech Industries. All rights reserved.
+        © 2025 Grupo Garraz. Todos los derechos reservados.
       </Typography>
     </Box>
   );

@@ -7,17 +7,17 @@ const CenteredButton = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", mt: 4, mb: 4 }}>
       {" "}
       {/* Adjust marginTop (mt) as needed */}
       <Button
         variant="contained"
         color="primary"
         sx={{ width: 400 }} // Setting the width of the button
-        onClick={() => navigate("/products")} // Navigation action
+        onClick={() => navigate("/products/todos")} // Navigation action
         endIcon={<ArrowForwardIcon />} // Add the arrow icon at the end of the button text
       >
-        Go to Products
+        Ver todos los productos
       </Button>
     </Box>
   );

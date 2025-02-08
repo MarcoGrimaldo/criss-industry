@@ -24,6 +24,11 @@ const GridPreviewItems = () => {
   const [products, setProducts] = useState([]); // State to store products
   const navigate = useNavigate();
 
+  const path = window.location.pathname;
+  const parts = path.split("/");
+  const pathRoute = parts[parts.length - 2];
+  console.log(pathRoute);
+
   const handleButtonClick = (id) => {
     navigate(`/product/${id}`);
   };
@@ -37,8 +42,11 @@ const GridPreviewItems = () => {
 
   return (
     <>
-      <Typography variant="h4" align="center">
-        Productos
+      <Typography
+        variant={pathRoute === "product" ? "h6" : "h5"}
+        align="center"
+      >
+        {pathRoute === "product" ? "Más de nuestros productos..." : "Productos"}
       </Typography>
       <Box
         sx={{
@@ -61,12 +69,20 @@ const GridPreviewItems = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={item.image}
+                image={item.images[0]}
                 alt={item.title}
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {item.title}
+                </Typography>
+                <Typography
+                  gutterBottom
+                  variant="h7"
+                  component="div"
+                  color="gray"
+                >
+                  {item.specialty}
                 </Typography>
                 <Button
                   variant="contained"
