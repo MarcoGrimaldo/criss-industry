@@ -58,9 +58,7 @@ const WhyContent = () => {
           justifyContent: "center",
           gap: 4, // Spacing between cards
           padding: "40px 20px",
-          "@media (max-width: 599px)": {
-            flexDirection: "column",
-          },
+          flexWrap: "wrap",
         }}
       >
         {cardData.map((item) => (
