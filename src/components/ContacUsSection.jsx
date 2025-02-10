@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -34,81 +34,137 @@ const WhatsAppButton = styled(Button)(({ theme }) => ({
 }));
 
 const ContactUsSection = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  // Handle input change
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/ggarruzventas@gmail.com",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (response.ok) {
+        setSubmitted(true); // Show Thank You message
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
   return (
     <Box sx={{ backgroundColor: "#f4f4f4", padding: "60px 20px" }}>
-      <Typography variant="h3" align="center" gutterBottom>
-        Contacto
-      </Typography>
-      <Typography
-        variant="body1"
-        align="center"
-        sx={{ marginBottom: "40px", color: "#666" }}
-      >
-        ¡Nos encantaría saber de usted! Por favor complete el siguiente
-        formulario o comuníquese con nosotros A través de WhatsApp.
-      </Typography>
-
-      <ContactContainer>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            justifyContent: "center",
-          }}
-        >
-          {/* Contact Form */}
-          <Box sx={{ flex: 1, width: "100%" }}>
-            <Typography variant="h5" gutterBottom>
-              Envíanos un mensaje
-            </Typography>
-
-            <form noValidate autoComplete="off">
-              <TextField
-                fullWidth
-                label="Nombre"
-                variant="outlined"
-                margin="normal"
-              />
-              <TextField
-                fullWidth
-                label="Email"
-                variant="outlined"
-                margin="normal"
-              />
-              <TextField
-                fullWidth
-                label="Mensaje"
-                variant="outlined"
-                multiline
-                rows={4}
-                margin="normal"
-              />
-
-              <StyledButton variant="contained" fullWidth>
-                Envíar
-              </StyledButton>
-            </form>
-          </Box>
-
-          {/* WhatsApp Contact Button */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-            }}
+      {submitted ? (
+        <Typography variant="h4" align="center" gutterBottom>
+          ¡Gracias por tu mensaje! Te responderemos pronto. 😊
+        </Typography>
+      ) : (
+        <>
+          <Typography variant="h3" align="center" gutterBottom>
+            Contacto
+          </Typography>
+          <Typography
+            variant="body1"
+            align="center"
+            sx={{ marginBottom: "40px", color: "#666" }}
           >
-            <WhatsAppButton
-              variant="contained"
-              fullWidth
-              startIcon={<WhatsAppIcon />}
-              onClick={() => window.open("https://wa.me/1234567890", "_blank")} // Replace with your WhatsApp number
+            ¡Nos encantaría saber de usted! Por favor complete el siguiente
+            formulario o comuníquese con nosotros A través de WhatsApp.
+          </Typography>
+
+          <ContactContainer>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+                justifyContent: "center",
+              }}
             >
-              Contáctenos en WhatsApp
-            </WhatsAppButton>
-          </Box>
-        </Box>
-      </ContactContainer>
+              {/* Contact Form */}
+              <Box sx={{ flex: 1, width: "100%" }}>
+                <Typography variant="h5" gutterBottom>
+                  Envíanos un mensaje
+                </Typography>
+
+                <form noValidate onSubmit={handleSubmit}>
+                  <TextField
+                    fullWidth
+                    name="name"
+                    placeholder="Nombre"
+                    value={formData.name}
+                    onChange={handleChange}
+                    label="Nombre"
+                    variant="outlined"
+                    margin="normal"
+                  />
+                  <TextField
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    fullWidth
+                    label="Email"
+                    variant="outlined"
+                    margin="normal"
+                  />
+                  <TextField
+                    name="message"
+                    placeholder="Mensaje"
+                    value={formData.message}
+                    onChange={handleChange}
+                    fullWidth
+                    label="Mensaje"
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    margin="normal"
+                  />
+                  <StyledButton variant="contained" fullWidth type="submit">
+                    Envíar
+                  </StyledButton>
+                  {/* Hidden fields for security */}
+                  <input type="hidden" name="_captcha" value="false" />
+                </form>
+              </Box>
+
+              {/* WhatsApp Contact Button */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <WhatsAppButton
+                  variant="contained"
+                  fullWidth
+                  startIcon={<WhatsAppIcon />}
+                  onClick={() =>
+                    window.open("https://wa.me/1234567890", "_blank")
+                  } // Replace with your WhatsApp number
+                >
+                  Contáctenos en WhatsApp
+                </WhatsAppButton>
+              </Box>
+            </Box>
+          </ContactContainer>
+        </>
+      )}
     </Box>
   );
 };
