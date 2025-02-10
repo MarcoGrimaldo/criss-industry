@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  CircularProgress,
+  ImageList,
+  ImageListItem,
+  Dialog,
+  DialogContent,
+} from "@mui/material";
 import GridPreviewItems from "./GridPreviewItems";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { styled } from "@mui/system";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 // Styled container for the detail view
 const DetailContainer = styled(Box)(({ theme }) => ({
@@ -23,7 +29,7 @@ const DetailContainer = styled(Box)(({ theme }) => ({
 const LeftSection = styled(Box)(({ theme }) => ({
   flexBasis: "100%",
   padding: "0 70px 0 20px",
-  maxWidth: "200px",
+  maxWidth: "300px",
   [".slick-arrow:before"]: {
     color: "gray",
   },
@@ -47,11 +53,12 @@ const WhatsAppButton = styled(Button)(({ theme }) => ({
 const ProductDetail = () => {
   const [product, setProduct] = useState(null); // Default to null to check loading state
   const [loading, setLoading] = useState(true); // State to track loading
+  const [selectedImage, setSelectedImage] = useState(null); // State for zoomed image
 
   const path = window.location.pathname;
   const parts = path.split("/");
   const productKey = parts[parts.length - 1];
-  const url = `${import.meta.env.VITE_API_URL}/api/products/${productKey}`;
+  const url = `${import.meta.env.VITE_API_URL}/api/product/${productKey}`;
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -97,20 +104,36 @@ const ProductDetail = () => {
 
   return (
     <>
-      <DetailContainer>
+      <DetailContainer sx={{ justifyContent: "space-evenly" }}>
         <LeftSection>
-          {/* Image Carousel */}
-          <Slider dots infinite speed={500} slidesToShow={1} slidesToScroll={1}>
+          {/* Image Grid */}
+          <ImageList cols={1}>
             {product.images.map((image, index) => (
-              <Box key={index} sx={{ textAlign: "center" }}>
+              <ImageListItem
+                key={index}
+                onClick={() => setSelectedImage(image)}
+                sx={{ cursor: "pointer" }}
+              >
                 <img
                   src={image}
-                  alt={`Product image ${index + 1}`}
-                  style={{ width: "100%", borderRadius: "8px" }}
+                  alt={`Product ${index}`}
+                  loading="lazy"
+                  style={{
+                    width: "100%",
+                    borderRadius: "8px",
+                    minWidth: 35,
+                  }}
                 />
-              </Box>
+              </ImageListItem>
             ))}
-          </Slider>
+          </ImageList>
+
+          {/* Image Zoom Modal */}
+          <Dialog open={!!selectedImage} onClose={() => setSelectedImage(null)}>
+            <DialogContent>
+              <img src={selectedImage} alt="Zoomed" style={{ width: "100%" }} />
+            </DialogContent>
+          </Dialog>
         </LeftSection>
         <RightSection>
           <Typography variant="h4" gutterBottom>
