@@ -27,10 +27,12 @@ const GridPreviewItems = () => {
   const path = window.location.pathname;
   const parts = path.split("/");
   const pathRoute = parts[parts.length - 2];
-  console.log(pathRoute);
 
   const handleButtonClick = (id) => {
     navigate(`/product/${id}`);
+    if (pathRoute) {
+      navigate(0);
+    }
   };
 
   useEffect(() => {

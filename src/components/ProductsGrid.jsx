@@ -55,7 +55,8 @@ const ProductsGrid = () => {
     };
 
     fetchProducts();
-  }, [url, products]); // Empty dependency array means this effect runs only once after the initial render
+    //
+  }, [url]); // Empty dependency array means this effect runs only once after the initial render
 
   if (loading) {
     return (
