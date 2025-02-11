@@ -31,7 +31,7 @@ const GridPreviewItems = () => {
   const handleButtonClick = (id) => {
     navigate(`/product/${id}`);
     if (pathRoute) {
-      navigate(0);
+      navigate("/products/todos");
     }
   };
 
