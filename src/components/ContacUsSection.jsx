@@ -155,7 +155,13 @@ const ContactUsSection = () => {
                   fullWidth
                   startIcon={<WhatsAppIcon />}
                   onClick={() =>
-                    window.open("https://wa.me/1234567890", "_blank")
+                    window.open(
+                      "https://wa.me/5215636387832?text=" +
+                        encodeURIComponent(
+                          `¡Hola! Me interesa obtener información. `,
+                          "_blank"
+                        )
+                    )
                   } // Replace with your WhatsApp number
                 >
                   Contáctenos en WhatsApp

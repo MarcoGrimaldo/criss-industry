@@ -13,7 +13,6 @@ const Home = () => {
       <Header />
       <Hero />
       <WhyContent />
-      <GridPreviewItems />
       <MiscCardSection />
       <ContactUsSection />
       <Footer />

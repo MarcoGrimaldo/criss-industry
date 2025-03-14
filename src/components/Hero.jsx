@@ -7,6 +7,7 @@ const Hero = () => {
 
   const handleButtonClick = (id) => {
     navigate(`/products/${id}`);
+    if (id === "mantenimientos") navigate(`/product/1018`);
   };
 
   return (
@@ -85,6 +86,7 @@ const Hero = () => {
           { id: "asfaltos", title: "Asfaltos" },
           { id: "suelos", title: "Suelos" },
           { id: "suministros", title: "Suministros y otros equipos" },
+          { id: "mantenimientos", title: "Mantenimientos" },
         ].map((item, index) => (
           <Grid item key={index}>
             <Button

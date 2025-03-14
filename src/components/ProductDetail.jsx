@@ -37,6 +37,8 @@ const LeftSection = styled(Box)(({ theme }) => ({
 
 const RightSection = styled(Box)(({ theme }) => ({
   flexBasis: "50%",
+  display: "flex",
+  flexDirection: "column",
 }));
 // Custom styled WhatsApp button
 const WhatsAppButton = styled(Button)(({ theme }) => ({
@@ -142,11 +144,24 @@ const ProductDetail = () => {
           <Typography variant="body1" sx={{ marginBottom: "20px" }}>
             {product.description}
           </Typography>
+          <img
+            src="/qualityy.png"
+            alt="quality"
+            style={{ maxWidth: "100px", alignSelf: "center" }}
+          />
           <WhatsAppButton
             variant="contained"
             startIcon={<WhatsAppIcon />}
             endIcon={<ArrowForwardIcon />}
-            onClick={() => window.open("https://wa.me/1234567890", "_blank")} // Replace with your WhatsApp number
+            onClick={() =>
+              window.open(
+                "https://wa.me/5215636387832?text=" +
+                  encodeURIComponent(
+                    `¡Hola! Me interesa cotizar el siguiente articulo: ${product.title} `,
+                    "_blank"
+                  )
+              )
+            } // Replace with your WhatsApp number
           >
             Cotizar
           </WhatsAppButton>

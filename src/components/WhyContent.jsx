@@ -12,13 +12,6 @@ const cardData = [
     image: "https://files.grupogarruz.com.mx/images/iso.svg",
   },
   {
-    id: 2,
-    title: "Eficiencia en mediciones",
-    description:
-      "Optimizamos cada proceso con herramientas precisas y metodologías innovadoras. Nuestro enfoque basado en datos te brinda resultados exactos y confiables para una mejor toma de decisiones.",
-    image: "https://files.grupogarruz.com.mx/images/high-perf.svg",
-  },
-  {
     id: 3,
     title: "Soluciones creativas",
     description:
