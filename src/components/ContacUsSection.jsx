@@ -40,30 +40,38 @@ const ContactUsSection = () => {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
+    setError("");
+
+    const data = new FormData();
+    data.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY);
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("message", formData.message);
 
     try {
-      const response = await fetch(
-        "https://formsubmit.co/ajax/ggarruzventas@gmail.com",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data,
+      });
 
-      if (response.ok) {
-        setSubmitted(true); // Show Thank You message
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setError("Hubo un error al enviar el mensaje. Intenta de nuevo.");
       }
-    } catch (error) {
-      console.error("Error submitting form:", error);
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      setError("Hubo un error al enviar el mensaje. Intenta de nuevo.");
     }
   };
   return (
@@ -138,8 +146,11 @@ const ContactUsSection = () => {
                   <StyledButton variant="contained" fullWidth type="submit">
                     Envíar
                   </StyledButton>
-                  {/* Hidden fields for security */}
-                  <input type="hidden" name="_captcha" value="false" />
+                  {error && (
+                    <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                      {error}
+                    </Typography>
+                  )}
                 </form>
               </Box>
 
