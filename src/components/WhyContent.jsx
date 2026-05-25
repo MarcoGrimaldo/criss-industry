@@ -9,14 +9,14 @@ const cardData = [
     title: "Calidad en el servicio",
     description:
       "Nos comprometemos con la excelencia en cada interacción. Nuestro equipo garantiza atención personalizada, soluciones adaptadas a tus necesidades y un servicio que supera expectativas.",
-    image: "https://files.grupogarruz.com.mx/images/iso.svg",
+    image: "/iso.svg",
   },
   {
     id: 3,
     title: "Soluciones creativas",
     description:
       " Pensamos fuera de lo convencional para ofrecerte estrategias innovadoras. Nos especializamos en transformar desafíos en oportunidades con ideas frescas y efectivas.",
-    image: "https://files.grupogarruz.com.mx/images/solutions.svg",
+    image: "/solutions.svg",
   },
 ];
 
